@@ -1,0 +1,4331 @@
+{
+	"info": {
+		"_postman_id": "7fdf7771-d9fe-4274-9587-f55bce4a0e68",
+		"name": "Objects Microservice",
+		"description": "Objects Microservice API documentation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26460679"
+	},
+	"item": [
+		{
+			"name": "Object Definitions Workflow",
+			"item": [
+				{
+					"name": "Create",
+					"item": [
+						{
+							"name": "Basic create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Response status code is 201', function () {",
+											"    pm.expect(pm.response.code).to.equal(201);",
+											"})",
+											"",
+											"const {id, name, description, enabled, createdBy, updatedBy} = pm.response.json();",
+											"",
+											"pm.test('Name should not be empty', function () {",
+											"    pm.expect(name).to.not.be.empty;",
+											"    pm.collectionVariables.set(\"objectName\", name)",
+											"})",
+											"",
+											"pm.test('Id should be defined', function () {",
+											"    pm.expect(id).to.not.be.undefined;",
+											"    pm.collectionVariables.set(\"objectId\", id)",
+											"})",
+											"",
+											"pm.test('Description should not be empty', function () {",
+											"    pm.expect(description).to.not.be.empty;",
+											"    pm.collectionVariables.set(\"objectDescription\", description)",
+											"})",
+											"",
+											"pm.test('Enabled should be defined', function () {",
+											"    pm.expect(enabled).to.not.be.undefined;",
+											"    pm.collectionVariables.set(\"objectEnabled\", enabled)",
+											"})",
+											"",
+											"pm.test(\"Creator user should be defined\", function() {",
+											"    const requestUserId = pm.collectionVariables.get(\"requestUserId\");",
+											"    pm.expect(createdBy.id).equals(Number(requestUserId));",
+											"});",
+											"",
+											"pm.test(\"Updater user should be defined\", function() {",
+											"    const requestUserId = pm.collectionVariables.get(\"requestUserId\");",
+											"    pm.expect(updatedBy.id).equals(Number(requestUserId));",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"{{$randomWords}}\",\n  \"description\": \"{{$randomLoremSentence}}\",\n  \"enabled\": {{$randomBoolean}},\n  \"createdById\": {{requestUserId}}\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/object-definitions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-definitions"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Create Object Definition With All Properties",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"{{$randomWords}}\",\n  \"description\": \"{{$randomLoremSentence}}\",\n  \"enabled\": {{$randomBoolean}},\n  \"createdById\": 78\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-definitions",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-definitions"
+											]
+										}
+									},
+									"_postman_previewlanguage": null,
+									"header": null,
+									"cookie": [],
+									"body": null
+								}
+							]
+						},
+						{
+							"name": "Without description",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Response status code is 201', function () {\r",
+											"    pm.expect(pm.response.code).to.equal(201);\r",
+											"})\r",
+											"\r",
+											"const {name} = pm.response.json();\r",
+											"pm.collectionVariables.set(\"secondName\", name);\r",
+											"\r",
+											"pm.test('Description should be null', function () {\r",
+											"     var responseObject = pm.response.json();\r",
+											"\r",
+											"     pm.expect(responseObject.description).to.be.null;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"{{$randomWords}}\",\n  \"enabled\": {{$randomBoolean}},\n  \"createdById\": {{requestUserId}}\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/object-definitions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-definitions"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Create Object Definition With All Properties",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"{{$randomWords}}\",\n  \"description\": \"{{$randomLoremSentence}}\",\n  \"enabled\": {{$randomBoolean}},\n  \"createdById\": 78\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-definitions",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-definitions"
+											]
+										}
+									},
+									"_postman_previewlanguage": null,
+									"header": null,
+									"cookie": [],
+									"body": null
+								}
+							]
+						},
+						{
+							"name": "Where user does not exist",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404 if user is not found\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"{{$randomWords}}\",\n  \"description\": \"{{$randomLoremSentence}}\",\n  \"enabled\": {{$randomBoolean}},\n  \"createdById\": 0\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/object-definitions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-definitions"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Create Object Definition With All Properties",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"{{$randomWords}}\",\n  \"description\": \"{{$randomLoremSentence}}\",\n  \"enabled\": {{$randomBoolean}},\n  \"createdById\": 78\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-definitions",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-definitions"
+											]
+										}
+									},
+									"_postman_previewlanguage": null,
+									"header": null,
+									"cookie": [],
+									"body": null
+								}
+							]
+						},
+						{
+							"name": "Where name already exists",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403 if name already exists\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"{{objectName}}\",\n  \"description\": \"{{$randomLoremSentence}}\",\n  \"enabled\": {{$randomBoolean}},\n  \"createdById\": 78\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/object-definitions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-definitions"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Create Object Definition With All Properties",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"{{$randomWords}}\",\n  \"description\": \"{{$randomLoremSentence}}\",\n  \"enabled\": {{$randomBoolean}},\n  \"createdById\": 78\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-definitions",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-definitions"
+											]
+										}
+									},
+									"_postman_previewlanguage": null,
+									"header": null,
+									"cookie": [],
+									"body": null
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "GetAll",
+					"item": [
+						{
+							"name": "Get all object definitions",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"const jsonData = pm.response.json();\r",
+											"const createdObjectId = pm.collectionVariables.get(\"objectId\");\r",
+											"\r",
+											"pm.test(\"Object created should be in the response\", function () {\r",
+											"    pm.expect(jsonData.map(data => data.id)).to.contain(createdObjectId);\r",
+											"});\r",
+											"\r",
+											"const foundedCreatedObject = jsonData.filter(data => data.id === createdObjectId)[0];\r",
+											"\r",
+											"pm.test(\"Object description should be the same\", function(){\r",
+											"    const createdObjectDescription = pm.collectionVariables.get(\"objectDescription\");\r",
+											"    pm.expect(foundedCreatedObject.description).to.be.equal(createdObjectDescription);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Object name should be the same\", function(){\r",
+											"    const createdObjectDescription = pm.collectionVariables.get(\"objectName\");\r",
+											"    pm.expect(foundedCreatedObject.name).to.be.equal(createdObjectDescription);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Object enabled should be the same\", function(){\r",
+											"    const createdObjectDescription = pm.collectionVariables.get(\"objectEnabled\");\r",
+											"    pm.expect(foundedCreatedObject.enabled).to.be.equal(createdObjectDescription);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Object creator user should be the same\", function(){\r",
+											"    const createdObjectDescription = +pm.collectionVariables.get(\"requestUserId\");\r",
+											"    pm.expect(foundedCreatedObject.createdBy.id).to.be.equal(createdObjectDescription);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Object updater user should be the same\", function(){\r",
+											"    const createdObjectDescription = +pm.collectionVariables.get(\"requestUserId\");\r",
+											"    pm.expect(foundedCreatedObject.updatedBy.id).to.be.equal(createdObjectDescription);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"All objects should have a name\", function () {\r",
+											"     var responseJSON = pm.response.json();\r",
+											"     responseJSON.forEach((object) => {\r",
+											"            pm.expect(object).to.have.property('name').that.is.a('string').and.is.not.empty;\r",
+											"     });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"All objects should have a user createdBy\", function () {\r",
+											"     pm.expect(pm.response.json()).to.be.an('array');\r",
+											"\r",
+											"     pm.response.json().forEach((object) => {\r",
+											"            pm.expect(object.createdBy).to.exist.and.to.be.an('object');\r",
+											"     });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"All objects should have a user updatedBy\", function () {\r",
+											"    var responseJSON = pm.response.json();\r",
+											"    pm.expect(responseJSON).to.be.an('array');\r",
+											"    \r",
+											"    responseJSON.forEach((object) => {\r",
+											"     pm.expect(object).to.have.property('updatedBy').that.is.an('object');\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"All objects should have a createdAt\", function () {\r",
+											"    var responseJSON = pm.response.json();\r",
+											"    \r",
+											"    responseJSON.forEach((object) => {\r",
+											"     pm.expect(object).to.have.property('createdAt');\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"All objects should have a updatedAt\", function () {\r",
+											"    var responseJSON = pm.response.json();\r",
+											"    pm.expect(responseJSON).to.be.an('array');\r",
+											"    responseJSON.forEach((object) => {\r",
+											"     pm.expect(object).to.have.property('updatedAt');\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"All objects should have a enabled propertie\", function () {\r",
+											"     pm.expect(pm.response.json()).to.be.an('array');\r",
+											"     pm.response.json().forEach((obj) => {\r",
+											"            pm.expect(obj).to.have.property('enabled');\r",
+											"     });\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/object-definitions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-definitions"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Update",
+					"item": [
+						{
+							"name": "Basic update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Response status code is 200', function () {",
+											"    pm.expect(pm.response.code).to.equal(200);",
+											"})",
+											"",
+											"const {id, name, description, enabled, createdBy, updatedBy} = pm.response.json();",
+											"",
+											"pm.test('Name should not be empty', function () {",
+											"    pm.expect(name).to.not.be.empty;",
+											"    pm.collectionVariables.set(\"objectName\", name)",
+											"})",
+											"",
+											"pm.test('Id should be defined', function () {",
+											"    pm.expect(id).to.not.be.undefined;",
+											"    pm.collectionVariables.set(\"objectId\", id)",
+											"})",
+											"",
+											"pm.test(\"Id should be the same\", function () {",
+											"    const idUpdated = +pm.collectionVariables.get(\"objectId\");",
+											"    pm.expect(id).to.be.equal(idUpdated);",
+											"})",
+											"",
+											"pm.test('Description should not be empty', function () {",
+											"    pm.expect(description).to.not.be.empty;",
+											"    pm.collectionVariables.set(\"objectDescription\", description)",
+											"})",
+											"",
+											"pm.test('Enabled should be defined', function () {",
+											"    pm.expect(enabled).to.not.be.undefined;",
+											"    pm.collectionVariables.set(\"objectEnabled\", enabled)",
+											"})",
+											"",
+											"pm.test(\"Creator user should be defined\", function() {",
+											"    const requestUserId = pm.collectionVariables.get(\"requestUserId\");",
+											"    pm.expect(createdBy.id).equals(Number(requestUserId));",
+											"});",
+											"",
+											"pm.test(\"Updater user should be defined\", function() {",
+											"    const requestUserId = pm.collectionVariables.get(\"requestUserId\");",
+											"    pm.expect(updatedBy.id).equals(Number(requestUserId));",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": {{objectId}},\n    \"name\": \"{{$randomWords}}\",\n    \"description\": \"{{$randomLoremSentence}}\",\n    \"enabled\": {{$randomBoolean}},\n    \"updatedById\": {{requestUserId}}\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/object-definitions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-definitions"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Create Object Definition With All Properties",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"{{$randomWords}}\",\n  \"description\": \"{{$randomLoremSentence}}\",\n  \"enabled\": {{$randomBoolean}},\n  \"createdById\": 78\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-definitions",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-definitions"
+											]
+										}
+									},
+									"_postman_previewlanguage": null,
+									"header": null,
+									"cookie": [],
+									"body": null
+								}
+							]
+						},
+						{
+							"name": "Where name already exists",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Response status code is 403', function () {\r",
+											"    pm.expect(pm.response.code).to.equal(403);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": {{objectId}},\n    \"name\": \"{{secondName}}\",\n    \"updatedById\": {{requestUserId}}\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/object-definitions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-definitions"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Create Object Definition With All Properties",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"{{$randomWords}}\",\n  \"description\": \"{{$randomLoremSentence}}\",\n  \"enabled\": {{$randomBoolean}},\n  \"createdById\": 78\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-definitions",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-definitions"
+											]
+										}
+									},
+									"_postman_previewlanguage": null,
+									"header": null,
+									"cookie": [],
+									"body": null
+								}
+							]
+						},
+						{
+							"name": "Where user does not exist",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404 if user is not found\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"{{$randomWords}}\",\n  \"description\": \"{{$randomLoremSentence}}\",\n  \"enabled\": {{$randomBoolean}},\n  \"updatedById\": -1\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/object-definitions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-definitions"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Create Object Definition With All Properties",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"{{$randomWords}}\",\n  \"description\": \"{{$randomLoremSentence}}\",\n  \"enabled\": {{$randomBoolean}},\n  \"createdById\": 78\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-definitions",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-definitions"
+											]
+										}
+									},
+									"_postman_previewlanguage": null,
+									"header": null,
+									"cookie": [],
+									"body": null
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "FindByMany",
+					"item": [
+						{
+							"name": "Singular",
+							"item": [
+								{
+									"name": "Find By Name",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});\r",
+													"\r",
+													"const ids = pm.response.json().map((a) => a.id);\r",
+													"\r",
+													"pm.test(\"Object returned is the correct\", function(){\r",
+													"    const objectId = pm.collectionVariables.get(\"objectId\");\r",
+													"    pm.expect(ids).to.contains(objectId);\r",
+													"})"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n   \"name\": \"{{objectName}}\" \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-definitions/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-definitions",
+												"many"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Find By Description",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});\r",
+													"\r",
+													"const ids = pm.response.json().map((a) => a.id);\r",
+													"\r",
+													"pm.test(\"Object returned is the correct\", function(){\r",
+													"    const objectId = pm.collectionVariables.get(\"objectId\");\r",
+													"    pm.expect(ids).to.contains(objectId);\r",
+													"})"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n   \"description\": \"{{objectDescription}}\" \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-definitions/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-definitions",
+												"many"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Find By CreatedBy",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});\r",
+													"\r",
+													"const ids = pm.response.json().map((a) => a.id);\r",
+													"\r",
+													"pm.test(\"Object returned is the correct\", function(){\r",
+													"    const objectId = pm.collectionVariables.get(\"objectId\");\r",
+													"    pm.expect(ids).to.contains(objectId);\r",
+													"})"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n   \"createdById\": \"{{requestUserId}}\" \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-definitions/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-definitions",
+												"many"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Find By UpdatedBy",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});\r",
+													"\r",
+													"const ids = pm.response.json().map((a) => a.id);\r",
+													"\r",
+													"pm.test(\"Object returned is the correct\", function(){\r",
+													"    const objectId = pm.collectionVariables.get(\"objectId\");\r",
+													"    pm.expect(ids).to.contains(objectId);\r",
+													"})"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n   \"updatedById\": \"{{requestUserId}}\" \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-definitions/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-definitions",
+												"many"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Plural",
+							"item": [
+								{
+									"name": "Find By Names",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});\r",
+													"\r",
+													"const ids = pm.response.json().map((a) => a.id);\r",
+													"\r",
+													"pm.test(\"Object returned is the correct\", function(){\r",
+													"    const objectId = pm.collectionVariables.get(\"objectId\");\r",
+													"    pm.expect(ids).to.contains(objectId);\r",
+													"})"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n   \"names\": [\"{{objectName}}\"] \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-definitions/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-definitions",
+												"many"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Find By Descriptions",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});\r",
+													"\r",
+													"const ids = pm.response.json().map((a) => a.id);\r",
+													"\r",
+													"pm.test(\"Object returned is the correct\", function(){\r",
+													"    const objectId = pm.collectionVariables.get(\"objectId\");\r",
+													"    pm.expect(ids).to.contains(objectId);\r",
+													"})"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n   \"descriptions\": [\"{{objectDescription}}\" ]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-definitions/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-definitions",
+												"many"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Find By CreatedByIds",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});\r",
+													"\r",
+													"const ids = pm.response.json().map((a) => a.id);\r",
+													"\r",
+													"pm.test(\"Object returned is the correct\", function(){\r",
+													"    const objectId = pm.collectionVariables.get(\"objectId\");\r",
+													"    pm.expect(ids).to.contains(objectId);\r",
+													"})"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n   \"createdByIds\": [{{requestUserId}}]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-definitions/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-definitions",
+												"many"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Find By UpdatedByIds",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});\r",
+													"\r",
+													"const ids = pm.response.json().map((a) => a.id);\r",
+													"\r",
+													"pm.test(\"Object returned is the correct\", function(){\r",
+													"    const objectId = pm.collectionVariables.get(\"objectId\");\r",
+													"    pm.expect(ids).to.contains(objectId);\r",
+													"})"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n   \"updatedByIds\": [{{requestUserId}}]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-definitions/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-definitions",
+												"many"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "GetById",
+					"item": [
+						{
+							"name": "Get by id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"const { id, name, description, createdAt, updatedAt, createdBy, updatedBy } = pm.response.json();\r",
+											"\r",
+											"const createdObjectId = pm.collectionVariables.get(\"objectId\");\r",
+											"\r",
+											"pm.test(\"Object should be in the response\", function () {\r",
+											"    pm.expect(id).to.be.equal(createdObjectId);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/object-definitions/{{objectId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-definitions",
+										"{{objectId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Not exists",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/object-definitions/-1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-definitions",
+										"-1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Object Proprerties Workflow",
+			"item": [
+				{
+					"name": "Create",
+					"item": [
+						{
+							"name": "Create a new object property",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.environment.set('randomNumber', Math.floor(Math.random() * 5));\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"const { id, name, description, dataType, isDisplayable, isRequired, order, objectDefinition, listType, createdBy, updatedBy } = pm.response.json();\r",
+											"\r",
+											"pm.test(\"response should be an object\", function () {\r",
+											"     pm.expect(pm.response.json()).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"response should contain a id\", function () {\r",
+											"    pm.expect(id).to.be.a('number');\r",
+											"    pm.collectionVariables.set(\"pId\", id);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"should be defined datatype\", function () {\r",
+											"    pm.expect(dataType).to.eql(\"string\");\r",
+											"    pm.collectionVariables.set(\"pDataType\", dataType);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"should be defined name\", function() {\r",
+											"    pm.expect(name).to.not.be.empty;\r",
+											"    pm.collectionVariables.set(\"pName\", name);\r",
+											"})\r",
+											"\r",
+											"pm.test(\"should be defined isDisplayable\", function () {\r",
+											"     pm.expect(isDisplayable).to.exist;\r",
+											"     pm.collectionVariables.set(\"pIsDisplayable\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"should be defined isRequired\", function () {\r",
+											"     pm.expect(isRequired).to.exist;\r",
+											"     pm.collectionVariables.set(\"pIsRequired\", isRequired);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"should exist order and should be a number\", function () {\r",
+											"     var responseObject = pm.response.json();\r",
+											"     pm.expect(responseObject).to.be.an('object');\r",
+											"     pm.expect(responseObject).to.have.property('order');\r",
+											"     pm.expect(responseObject.order).to.be.a('number');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"should exist and be an object objectDefinition\", function () {\r",
+											"    const objectDefinitionId = pm.collectionVariables.get('objectId');\r",
+											"     pm.expect(objectDefinition).to.be.an('object');\r",
+											"     pm.expect(objectDefinition).to.exist;\r",
+											"     pm.expect(objectDefinition.id).to.be.equal(objectDefinitionId)\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"dataType\": \"string\",\n  \"name\": \"{{$randomWords}}\",\n  \"isDisplayable\": {{$randomBoolean}},\n  \"isRequired\": {{$randomBoolean}},\n  \"order\": {{randomNumber}},\n  \"objectDefinitionId\": {{objectId}},\n  \"createdById\": 79,\n  \"enabled\": {{$randomBoolean}},\n  \"description\": \"{{$randomLoremSentence}}\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/object-properties",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-properties"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "The object property has been successfully created.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"enabled\": \"<boolean>\",\n  \"description\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad request.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"enabled\": \"<boolean>\",\n  \"description\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Not found.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"enabled\": \"<boolean>\",\n  \"description\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal server error.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"enabled\": \"<boolean>\",\n  \"description\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Create a new object property with list type",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.environment.set('randomNumber', Math.floor(Math.random() * 5));\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"const { name, description, dataType, isDisplayable, isRequired, order, objectDefinition, listType, createdBy, updatedBy } = pm.response.json();\r",
+											"\r",
+											"pm.test(\"response should be an object\", function () {\r",
+											"     pm.expect(pm.response.json()).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"should be defined datatype\", function () {\r",
+											"    pm.expect(dataType).to.eql(\"list\");\r",
+											"    pm.collectionVariables.set(\"pDataType\", dataType);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"should be defined name\", function() {\r",
+											"    pm.expect(name).to.not.be.empty;\r",
+											"    pm.collectionVariables.set(\"pName\", name);\r",
+											"})\r",
+											"\r",
+											"pm.test(\"should be defined isDisplayable\", function () {\r",
+											"     pm.expect(isDisplayable).to.exist;\r",
+											"     pm.collectionVariables.set(\"pIsDisplayable\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"should be defined isRequired\", function () {\r",
+											"     pm.expect(isRequired).to.exist;\r",
+											"     pm.collectionVariables.set(\"pIsRequired\", isRequired);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"should exist order and should be a number\", function () {\r",
+											"     var responseObject = pm.response.json();\r",
+											"     pm.expect(responseObject).to.be.an('object');\r",
+											"     pm.expect(responseObject).to.have.property('order');\r",
+											"     pm.expect(responseObject.order).to.be.a('number');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"should exist and be an object objectDefinition\", function () {\r",
+											"    const objectDefinitionId = pm.collectionVariables.get('objectId');\r",
+											"     pm.expect(objectDefinition).to.be.an('object');\r",
+											"     pm.expect(objectDefinition).to.exist;\r",
+											"     pm.expect(objectDefinition.id).to.be.equal(objectDefinitionId)\r",
+											"});\r",
+											"\r",
+											"pm.test(\"should exist and be an object listType\", function () {\r",
+											"     pm.expect(listType).to.be.an('object');\r",
+											"     pm.expect(listType).to.exist;\r",
+											"     pm.expect(listType.id).to.be.eql(47)\r",
+											"});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"dataType\": \"list\",\n  \"name\": \"{{$randomWords}}\",\n  \"isDisplayable\": {{$randomBoolean}},\n  \"isRequired\": {{$randomBoolean}},\n  \"order\": {{randomNumber}},\n  \"objectDefinitionId\": {{objectId}},\n  \"createdById\": 79,\n  \"enabled\": {{$randomBoolean}},\n  \"description\": \"{{$randomLoremSentence}}\",\n  \"listTypeId\": 47\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/object-properties",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-properties"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "The object property has been successfully created.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"enabled\": \"<boolean>\",\n  \"description\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad request.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"enabled\": \"<boolean>\",\n  \"description\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Not found.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"enabled\": \"<boolean>\",\n  \"description\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal server error.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"enabled\": \"<boolean>\",\n  \"description\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Find All",
+					"item": [
+						{
+							"name": "Get all object properties Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Response time is less than 200ms', function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);",
+											"})",
+											"",
+											"const response = pm.response.json();",
+											"",
+											"if(response.length) {",
+											"    pm.test(\"response body should be correct\", function () {  ",
+											"        pm.expect(response[0]).to.have.property('id');",
+											"        pm.expect(response[0]).to.have.property('name');",
+											"        pm.expect(response[0]).to.have.property('description');",
+											"        pm.expect(response[0]).to.have.property('enabled');",
+											"        pm.expect(response[0]).to.have.property('isDisplayable');",
+											"        pm.expect(response[0]).to.have.property('isRequired');",
+											"        pm.expect(response[0]).to.have.property('order');",
+											"        pm.expect(response[0]).to.have.property('dataType');",
+											"        pm.expect(response[0]).to.have.property('createdAt');",
+											"        pm.expect(response[0]).to.have.property('createdBy');",
+											"        pm.expect(response[0]).to.have.property('updatedBy');",
+											"        pm.expect(response[0]).to.have.property('updatedAt');",
+											"        pm.expect(response[0]).to.have.property('objectType');",
+											"        pm.expect(response[0]).to.have.property('listType');",
+											"    });",
+											"}",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/object-properties",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-properties"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Successfully retrieved all object properties.",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/object-properties",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal server error.",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/object-properties",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Find",
+					"item": [
+						{
+							"name": "Find many object properties based on names",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"object found is correct\", function() {\r",
+											"    const response = pm.response.json();\r",
+											"\r",
+											"    const propertyId = pm.collectionVariables.get(\"pId\");\r",
+											"\r",
+											"    pm.expect(response[0].id).to.be.eql(propertyId);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"names\": [\n        \"{{pName}}\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/object-properties/many",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-properties",
+										"many"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Successfully found object properties.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad request.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal server error.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Find many object properties based on name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"object found is correct\", function() {\r",
+											"    const response = pm.response.json();\r",
+											"\r",
+											"    const propertyId = pm.collectionVariables.get(\"pId\");\r",
+											"\r",
+											"    pm.expect(response[0].id).to.be.eql(propertyId);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"{{pName}}\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/object-properties/many",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-properties",
+										"many"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Successfully found object properties.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad request.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal server error.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Find many object properties based on id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"object found is correct\", function() {\r",
+											"    const response = pm.response.json();\r",
+											"\r",
+											"    const propertyId = pm.collectionVariables.get(\"pId\");\r",
+											"\r",
+											"    pm.expect(response[0].id).to.be.eql(propertyId);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": {{pId}}\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/object-properties/many",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-properties",
+										"many"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Successfully found object properties.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad request.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal server error.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Find many object properties based on ids",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"object found is correct\", function() {\r",
+											"    const response = pm.response.json();\r",
+											"\r",
+											"    const propertyId = pm.collectionVariables.get(\"pId\");\r",
+											"\r",
+											"    pm.expect(response[0].id).to.be.eql(propertyId);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"ids\": [{{pId}}]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/object-properties/many",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-properties",
+										"many"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Successfully found object properties.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad request.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal server error.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Find many object properties based on dataType",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"object found is correct\", function() {\r",
+											"    const response = pm.response.json();\r",
+											"\r",
+											"    const propertyId = pm.collectionVariables.get(\"pId\");\r",
+											"\r",
+											"    pm.expect(response.map((r) => r.id)).to.contains(propertyId);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"dataType\": \"{{pDataType}}\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/object-properties/many",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-properties",
+										"many"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Successfully found object properties.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad request.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal server error.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Find many object properties based on dataTypes",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"object found is correct\", function() {\r",
+											"    const response = pm.response.json();\r",
+											"\r",
+											"    const propertyId = pm.collectionVariables.get(\"pId\");\r",
+											"\r",
+											"    pm.expect(response.map((r) => r.id)).to.contains(propertyId);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"datatypes\": [\"{{pDataType}}\"]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/object-properties/many",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-properties",
+										"many"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Successfully found object properties.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad request.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal server error.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Find many object properties based on object definition",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"object found is correct\", function() {\r",
+											"    const response = pm.response.json();\r",
+											"\r",
+											"    const propertyId = pm.collectionVariables.get(\"pId\");\r",
+											"\r",
+											"    pm.expect(response.map((r) => r.id)).to.contains(propertyId);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"objectDefinitionIds\": [{{objectId}}]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/object-properties/many",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-properties",
+										"many"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Successfully found object properties.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad request.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal server error.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Find many object properties based on object definitions",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"object found is correct\", function() {\r",
+											"    const response = pm.response.json();\r",
+											"\r",
+											"    const propertyId = pm.collectionVariables.get(\"pId\");\r",
+											"\r",
+											"    pm.expect(response.map((r) => r.id)).to.contains(propertyId);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"objectDefinitionId\": {{objectId}}\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/object-properties/many",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-properties",
+										"many"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Successfully found object properties.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad request.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal server error.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ids\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"createdByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"updatedByIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"datatypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"objectDefinitionIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"id\": \"<number>\",\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"updatedById\": \"<number>\",\n  \"enabled\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties/many",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties",
+												"many"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Update",
+					"item": [
+						{
+							"name": "Update a object property",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.environment.set('randomNumber', Math.floor(Math.random() * 5));"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"const { id, name, description, dataType, isDisplayable, isRequired, order, objectDefinition, listType, createdBy, updatedBy } = pm.response.json();\r",
+											"\r",
+											"pm.test(\"response should be an object\", function () {\r",
+											"     pm.expect(pm.response.json()).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"response should contain a id\", function () {\r",
+											"    pm.expect(id).to.be.a('number');\r",
+											"    pm.collectionVariables.set(\"pId\", id);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"should be defined datatype\", function () {\r",
+											"    pm.expect(dataType).to.eql(\"string\");\r",
+											"    pm.collectionVariables.set(\"pDataType\", dataType);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"should be defined name\", function() {\r",
+											"    pm.expect(name).to.not.be.empty;\r",
+											"    pm.collectionVariables.set(\"pName\", name);\r",
+											"})\r",
+											"\r",
+											"pm.test(\"should be defined isDisplayable\", function () {\r",
+											"     pm.expect(isDisplayable).to.exist;\r",
+											"     pm.collectionVariables.set(\"pIsDisplayable\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"should be defined isRequired\", function () {\r",
+											"     pm.expect(isRequired).to.exist;\r",
+											"     pm.collectionVariables.set(\"pIsRequired\", isRequired);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"should exist order and should be a number\", function () {\r",
+											"     var responseObject = pm.response.json();\r",
+											"     pm.expect(responseObject).to.be.an('object');\r",
+											"     pm.expect(responseObject).to.have.property('order');\r",
+											"     pm.expect(responseObject.order).to.be.a('number');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"should exist and be an object objectDefinition\", function () {\r",
+											"    const objectDefinitionId = pm.collectionVariables.get('objectId');\r",
+											"     pm.expect(objectDefinition).to.be.an('object');\r",
+											"     pm.expect(objectDefinition).to.exist;\r",
+											"     pm.expect(objectDefinition.id).to.be.equal(objectDefinitionId)\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": {{pId}},\n    \"dataType\": \"string\",\n    \"name\": \"{{$randomWords}}\",\n    \"isDisplayable\": {{$randomBoolean}},\n    \"isRequired\": {{$randomBoolean}},\n    \"order\": {{randomNumber}},\n    \"objectDefinitionId\": {{objectId}},\n    \"updatedById\": 78,\n    \"enabled\": {{$randomBoolean}},\n    \"description\": \"{{$randomLoremSentence}}\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/object-properties",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"object-properties"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "The object property has been successfully created.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"enabled\": \"<boolean>\",\n  \"description\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad request.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"enabled\": \"<boolean>\",\n  \"description\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Not found.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"enabled\": \"<boolean>\",\n  \"description\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal server error.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"dataType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"isDisplayable\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"order\": \"<number>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"createdById\": \"<number>\",\n  \"enabled\": \"<boolean>\",\n  \"description\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/object-properties",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"object-properties"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Dynamic Objects Workflow",
+			"item": [
+				{
+					"name": "Create",
+					"item": [
+						{
+							"name": "Create a new dynamic object",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"",
+											"pm.test(\"Response status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"id should be a number\", function () {",
+											"    pm.expect(pm.response.json().id).to.be.a('number');",
+											"",
+											"    pm.collectionVariables.set(\"dId\", pm.response.json().id)",
+											"});",
+											"",
+											"pm.test(\"enabled should be a boolean\", function () {",
+											"     var responseObject = pm.response.json();",
+											"     pm.expect(responseObject.enabled).to.be.a('boolean');",
+											"});",
+											"",
+											"pm.test(\"objectDefinition should be an object\", function () {",
+											"     var responseObject = pm.response.json();",
+											"     pm.expect(responseObject.objectDefinition).to.be.an('object');",
+											"     pm.expect(responseObject.objectDefinition.id).to.be.eql(responseObject.objectDefinitionId);",
+											"});",
+											"",
+											"pm.test(\"tenant should be an object\", function () {",
+											"     pm.expect(pm.response.json().tenant).to.be.an('object');",
+											"});",
+											"",
+											"pm.test(\"createdBy should be an object\", function () {",
+											"     pm.expect(pm.response.json().createdBy).to.be.an('object');",
+											"",
+											"     pm.expect(pm.response.json().createdBy.id).to.be.eql(pm.response.json().createdById);",
+											"});",
+											"",
+											"pm.test(\"updatedBy should be an object\", function () {",
+											"     var responseObject = pm.response.json();",
+											"     pm.expect(responseObject.updatedBy).to.be.an('object');",
+											"",
+											"     pm.expect(pm.response.json().updatedBy.id).to.be.eql(pm.response.json().createdById);",
+											"});",
+											"",
+											"pm.test(\"createdAt and updatedAt should be dates\", function () {",
+											"     pm.expect(pm.response.json().createdAt).to.be.a('string').and.to.match(/\\d{4}-\\d{2}-\\d{2}/, \"createdAt should be a valid date format\");",
+											"     pm.expect(pm.response.json().updatedAt).to.be.a('string').and.to.match(/\\d{4}-\\d{2}-\\d{2}/, \"updatedAt should be a valid date format\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"enabled\": {{$randomBoolean}},\n  \"objectDefinitionId\": {{objectId}},\n  \"tenantId\": 1,\n  \"createdById\": 79\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/dynamic-objects",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"dynamic-objects"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "The dynamic object has been successfully created.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"enabled\": \"<boolean>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"tenantId\": \"<number>\",\n  \"createdById\": \"<number>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/dynamic-objects",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"dynamic-objects"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Not found.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"enabled\": \"<boolean>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"tenantId\": \"<number>\",\n  \"createdById\": \"<number>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/dynamic-objects",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"dynamic-objects"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal server error.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"enabled\": \"<boolean>\",\n  \"objectDefinitionId\": \"<number>\",\n  \"tenantId\": \"<number>\",\n  \"createdById\": \"<number>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/dynamic-objects",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"dynamic-objects"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Find",
+					"item": [
+						{
+							"name": "Get all dynamic objects",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"",
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Content type is application/json\", function () {",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Presence and format of 'createdAt' and 'updatedAt' fields\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData).to.be.an('array');",
+											"    ",
+											"    responseData.forEach(function (item) {",
+											"        pm.expect(item.createdAt).to.exist;",
+											"        pm.expect(item.createdAt).to.be.a('string');",
+											"        ",
+											"        pm.expect(item.updatedAt).to.exist;",
+											"        pm.expect(item.updatedAt).to.be.a('string');",
+											"    });",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/dynamic-objects",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"dynamic-objects"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Successfully retrieved all dynamic objects.",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/dynamic-objects",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"dynamic-objects"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal server error.",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/dynamic-objects",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"dynamic-objects"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Update",
+					"item": [
+						{
+							"name": "Update a dynamic object",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": {{dId}},\n  \"enabled\": {{$randomBoolean}},\n  \"objectDefinitionId\": 2,\n  \"updatedById\": 78\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/dynamic-objects/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"dynamic-objects",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "The dynamic object has been successfully updated.",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<number>\",\n  \"enabled\": \"<boolean>\",\n  \"objectValueIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"objectDefinitionId\": \"<number>\",\n  \"tenantId\": \"<number>\",\n  \"updatedById\": \"<number>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/dynamic-objects/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"dynamic-objects",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Not found.",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<number>\",\n  \"enabled\": \"<boolean>\",\n  \"objectValueIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"objectDefinitionId\": \"<number>\",\n  \"tenantId\": \"<number>\",\n  \"updatedById\": \"<number>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/dynamic-objects/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"dynamic-objects",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Internal server error.",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<number>\",\n  \"enabled\": \"<boolean>\",\n  \"objectValueIds\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"objectDefinitionId\": \"<number>\",\n  \"tenantId\": \"<number>\",\n  \"updatedById\": \"<number>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/dynamic-objects/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"dynamic-objects",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "/"
+		},
+		{
+			"key": "object_name",
+			"value": ""
+		},
+		{
+			"key": "object_id",
+			"value": ""
+		},
+		{
+			"key": "requestUserId",
+			"value": "79"
+		},
+		{
+			"key": "objectName",
+			"value": ""
+		},
+		{
+			"key": "objectId",
+			"value": ""
+		},
+		{
+			"key": "objectDescription",
+			"value": ""
+		},
+		{
+			"key": "objectEnabled",
+			"value": ""
+		},
+		{
+			"key": "objectCreated",
+			"value": ""
+		},
+		{
+			"key": "{\"name\":\"group Outdoors bifurcated Croatia\",\"description\":\"Aliquam quas id qui velit et.\",\"enabled\":false,\"createdById\":79,\"createdBy\":{\"id\":79,\"firstName\":\"Abraham\",\"lastName\":\"Correa\",\"email\":\"abraham.correa@agiledreamteam.com\",\"fireBaseId\":\"310bd520-e061-7037-62b5-13ee6632467d\",\"enabled\":true,\"validated\":true,\"BackOfficeAccess\":true,\"SaasAccess\":true,\"avatar\":null,\"phone\":null,\"temporalId\":null,\"createdAt\":\"2023-06-23T14:58:07.425Z\",\"verifiedAt\":\"2023-06-23T14:58:07.425Z\",\"updatedAt\":\"2023-07-03T16:18:51.464Z\",\"tenants\":[{\"id\":1,\"name\":\"Hartford Office Interiors\",\"description\":\"Testing purposes in Orderbahn\",\"url\":\"hoi\",\"apiKey\":\"SrzczBcbeIhLsT3QQcEBtfhzQWeqo9lmn4K-TI1rHs\",\"apiSecret\":\"a9VBUUykzIpl0AMWV0YlZpxsNzOzRkqFMXw6-H1VxaRuEPPy1VPSqflyLDWrsFWJS2MjkU4-XWFzzQYgTlRTP2gxfL9ksqljUGZfrOfZz-JVFs4X\",\"enabled\":true,\"createdAt\":\"2022-08-09T17:37:42.597Z\",\"updatedAt\":\"2023-07-12T14:27:45.746Z\"},{\"id\":12,\"name\":\"Test Poet Two\",\"description\":\"Tenant for other testing purposes in POET\",\"url\":\"testpoettwo\",\"apiKey\":null,\"apiSecret\":null,\"enabled\":true,\"createdAt\":\"2023-07-11T14:52:37.684Z\",\"updatedAt\":\"2023-07-12T13:39:44.359Z\"},{\"id\":10,\"name\":\"Test Poet\",\"description\":\"Tenant for testing purposes in Poet PIM\",\"url\":\"testpoet\",\"apiKey\":null,\"apiSecret\":null,\"enabled\":true,\"createdAt\":\"2023-06-28T17:15:14.206Z\",\"updatedAt\":\"2023-08-14T15:01:33.356Z\"},{\"id\":17,\"name\":\"Kl Hartford Office Interiors\",\"description\":\"Hartford Office Interiors KL\",\"url\":\"hoikl\",\"apiKey\":\"123\",\"apiSecret\":\"123\",\"enabled\":true,\"createdAt\":\"2023-08-01T03:52:57.968Z\",\"updatedAt\":\"2023-08-04T01:10:26.259Z\"}],\"roles\":[{\"id\":108,\"enabled\":true,\"createdAt\":\"2023-11-03T22:23:49.159Z\",\"updatedAt\":\"2023-11-03T22:24:25.005Z\",\"role\":{\"id\":1,\"name\":\"Administrator\",\"description\":\"Super administrators\",\"tag\":\"god\",\"enabled\":true,\"BackOfficeAccess\":false,\"SaasAccess\":true,\"createdAt\":\"2022-08-19T17:31:01.561Z\",\"updatedAt\":\"2024-02-26T20:24:52.114Z\"},\"tenant\":{\"id\":10,\"name\":\"Test Poet\",\"description\":\"Tenant for testing purposes in Poet PIM\",\"url\":\"testpoet\",\"apiKey\":null,\"apiSecret\":null,\"enabled\":true,\"createdAt\":\"2023-06-28T17:15:14.206Z\",\"updatedAt\":\"2023-08-14T15:01:33.356Z\"},\"roleAlias\":null},{\"id\":109,\"enabled\":true,\"createdAt\":\"2023-11-03T22:23:49.172Z\",\"updatedAt\":\"2023-11-03T22:24:25.123Z\",\"role\":{\"id\":1,\"name\":\"Administrator\",\"description\":\"Super administrators\",\"tag\":\"god\",\"enabled\":true,\"BackOfficeAccess\":false,\"SaasAccess\":true,\"createdAt\":\"2022-08-19T17:31:01.561Z\",\"updatedAt\":\"2024-02-26T20:24:52.114Z\"},\"tenant\":{\"id\":12,\"name\":\"Test Poet Two\",\"description\":\"Tenant for other testing purposes in POET\",\"url\":\"testpoettwo\",\"apiKey\":null,\"apiSecret\":null,\"enabled\":true,\"createdAt\":\"2023-07-11T14:52:37.684Z\",\"updatedAt\":\"2023-07-12T13:39:44.359Z\"},\"roleAlias\":null},{\"id\":27,\"enabled\":true,\"createdAt\":\"2023-06-23T15:02:35.424Z\",\"updatedAt\":\"2023-11-03T22:24:25.184Z\",\"role\":{\"id\":42,\"name\":\"Role D\",\"description\":\"role D\",\"tag\":\"role_d\",\"enabled\":true,\"BackOfficeAccess\":true,\"SaasAccess\":false,\"createdAt\":\"2023-08-21T20:16:25.234Z\",\"updatedAt\":\"2023-08-21T20:16:25.234Z\"},\"tenant\":{\"id\":1,\"name\":\"Hartford Office Interiors\",\"description\":\"Testing purposes in Orderbahn\",\"url\":\"hoi\",\"apiKey\":\"SrzczBcbeIhLsT3QQcEBtfhzQWeqo9lmn4K-TI1rHs\",\"apiSecret\":\"a9VBUUykzIpl0AMWV0YlZpxsNzOzRkqFMXw6-H1VxaRuEPPy1VPSqflyLDWrsFWJS2MjkU4-XWFzzQYgTlRTP2gxfL9ksqljUGZfrOfZz-JVFs4X\",\"enabled\":true,\"createdAt\":\"2022-08-09T17:37:42.597Z\",\"updatedAt\":\"2023-07-12T14:27:45.746Z\"},\"roleAlias\":null},{\"id\":110,\"enabled\":true,\"createdAt\":\"2023-11-06T21:22:08.611Z\",\"updatedAt\":\"2023-11-06T21:22:08.611Z\",\"role\":{\"id\":44,\"name\":\"Integration Role\",\"description\":\"Integration Role\",\"tag\":\"integration role\",\"enabled\":true,\"BackOfficeAccess\":true,\"SaasAccess\":false,\"createdAt\":\"2023-10-30T19:54:39.088Z\",\"updatedAt\":\"2023-10-30T19:54:39.088Z\"},\"tenant\":{\"id\":17,\"name\":\"Kl Hartford Office Interiors\",\"description\":\"Hartford Office Interiors KL\",\"url\":\"hoikl\",\"apiKey\":\"123\",\"apiSecret\":\"123\",\"enabled\":true,\"createdAt\":\"2023-08-01T03:52:57.968Z\",\"updatedAt\":\"2023-08-04T01:10:26.259Z\"},\"roleAlias\":null}]},\"updatedBy\":{\"id\":79,\"firstName\":\"Abraham\",\"lastName\":\"Correa\",\"email\":\"abraham.correa@agiledreamteam.com\",\"fireBaseId\":\"310bd520-e061-7037-62b5-13ee6632467d\",\"enabled\":true,\"validated\":true,\"BackOfficeAccess\":true,\"SaasAccess\":true,\"avatar\":null,\"phone\":null,\"temporalId\":null,\"createdAt\":\"2023-06-23T14:58:07.425Z\",\"verifiedAt\":\"2023-06-23T14:58:07.425Z\",\"updatedAt\":\"2023-07-03T16:18:51.464Z\",\"tenants\":[{\"id\":1,\"name\":\"Hartford Office Interiors\",\"description\":\"Testing purposes in Orderbahn\",\"url\":\"hoi\",\"apiKey\":\"SrzczBcbeIhLsT3QQcEBtfhzQWeqo9lmn4K-TI1rHs\",\"apiSecret\":\"a9VBUUykzIpl0AMWV0YlZpxsNzOzRkqFMXw6-H1VxaRuEPPy1VPSqflyLDWrsFWJS2MjkU4-XWFzzQYgTlRTP2gxfL9ksqljUGZfrOfZz-JVFs4X\",\"enabled\":true,\"createdAt\":\"2022-08-09T17:37:42.597Z\",\"updatedAt\":\"2023-07-12T14:27:45.746Z\"},{\"id\":12,\"name\":\"Test Poet Two\",\"description\":\"Tenant for other testing purposes in POET\",\"url\":\"testpoettwo\",\"apiKey\":null,\"apiSecret\":null,\"enabled\":true,\"createdAt\":\"2023-07-11T14:52:37.684Z\",\"updatedAt\":\"2023-07-12T13:39:44.359Z\"},{\"id\":10,\"name\":\"Test Poet\",\"description\":\"Tenant for testing purposes in Poet PIM\",\"url\":\"testpoet\",\"apiKey\":null,\"apiSecret\":null,\"enabled\":true,\"createdAt\":\"2023-06-28T17:15:14.206Z\",\"updatedAt\":\"2023-08-14T15:01:33.356Z\"},{\"id\":17,\"name\":\"Kl Hartford Office Interiors\",\"description\":\"Hartford Office Interiors KL\",\"url\":\"hoikl\",\"apiKey\":\"123\",\"apiSecret\":\"123\",\"enabled\":true,\"createdAt\":\"2023-08-01T03:52:57.968Z\",\"updatedAt\":\"2023-08-04T01:10:26.259Z\"}],\"roles\":[{\"id\":108,\"enabled\":true,\"createdAt\":\"2023-11-03T22:23:49.159Z\",\"updatedAt\":\"2023-11-03T22:24:25.005Z\",\"role\":{\"id\":1,\"name\":\"Administrator\",\"description\":\"Super administrators\",\"tag\":\"god\",\"enabled\":true,\"BackOfficeAccess\":false,\"SaasAccess\":true,\"createdAt\":\"2022-08-19T17:31:01.561Z\",\"updatedAt\":\"2024-02-26T20:24:52.114Z\"},\"tenant\":{\"id\":10,\"name\":\"Test Poet\",\"description\":\"Tenant for testing purposes in Poet PIM\",\"url\":\"testpoet\",\"apiKey\":null,\"apiSecret\":null,\"enabled\":true,\"createdAt\":\"2023-06-28T17:15:14.206Z\",\"updatedAt\":\"2023-08-14T15:01:33.356Z\"},\"roleAlias\":null},{\"id\":109,\"enabled\":true,\"createdAt\":\"2023-11-03T22:23:49.172Z\",\"updatedAt\":\"2023-11-03T22:24:25.123Z\",\"role\":{\"id\":1,\"name\":\"Administrator\",\"description\":\"Super administrators\",\"tag\":\"god\",\"enabled\":true,\"BackOfficeAccess\":false,\"SaasAccess\":true,\"createdAt\":\"2022-08-19T17:31:01.561Z\",\"updatedAt\":\"2024-02-26T20:24:52.114Z\"},\"tenant\":{\"id\":12,\"name\":\"Test Poet Two\",\"description\":\"Tenant for other testing purposes in POET\",\"url\":\"testpoettwo\",\"apiKey\":null,\"apiSecret\":null,\"enabled\":true,\"createdAt\":\"2023-07-11T14:52:37.684Z\",\"updatedAt\":\"2023-07-12T13:39:44.359Z\"},\"roleAlias\":null},{\"id\":27,\"enabled\":true,\"createdAt\":\"2023-06-23T15:02:35.424Z\",\"updatedAt\":\"2023-11-03T22:24:25.184Z\",\"role\":{\"id\":42,\"name\":\"Role D\",\"description\":\"role D\",\"tag\":\"role_d\",\"enabled\":true,\"BackOfficeAccess\":true,\"SaasAccess\":false,\"createdAt\":\"2023-08-21T20:16:25.234Z\",\"updatedAt\":\"2023-08-21T20:16:25.234Z\"},\"tenant\":{\"id\":1,\"name\":\"Hartford Office Interiors\",\"description\":\"Testing purposes in Orderbahn\",\"url\":\"hoi\",\"apiKey\":\"SrzczBcbeIhLsT3QQcEBtfhzQWeqo9lmn4K-TI1rHs\",\"apiSecret\":\"a9VBUUykzIpl0AMWV0YlZpxsNzOzRkqFMXw6-H1VxaRuEPPy1VPSqflyLDWrsFWJS2MjkU4-XWFzzQYgTlRTP2gxfL9ksqljUGZfrOfZz-JVFs4X\",\"enabled\":true,\"createdAt\":\"2022-08-09T17:37:42.597Z\",\"updatedAt\":\"2023-07-12T14:27:45.746Z\"},\"roleAlias\":null},{\"id\":110,\"enabled\":true,\"createdAt\":\"2023-11-06T21:22:08.611Z\",\"updatedAt\":\"2023-11-06T21:22:08.611Z\",\"role\":{\"id\":44,\"name\":\"Integration Role\",\"description\":\"Integration Role\",\"tag\":\"integration role\",\"enabled\":true,\"BackOfficeAccess\":true,\"SaasAccess\":false,\"createdAt\":\"2023-10-30T19:54:39.088Z\",\"updatedAt\":\"2023-10-30T19:54:39.088Z\"},\"tenant\":{\"id\":17,\"name\":\"Kl Hartford Office Interiors\",\"description\":\"Hartford Office Interiors KL\",\"url\":\"hoikl\",\"apiKey\":\"123\",\"apiSecret\":\"123\",\"enabled\":true,\"createdAt\":\"2023-08-01T03:52:57.968Z\",\"updatedAt\":\"2023-08-04T01:10:26.259Z\"},\"roleAlias\":null}]},\"id\":30,\"createdAt\":\"2024-03-10T06:37:01.280Z\",\"updatedAt\":\"2024-03-10T06:37:01.280Z\"}",
+			"value": ""
+		},
+		{
+			"key": "secondName",
+			"value": ""
+		},
+		{
+			"key": "pDataType",
+			"value": ""
+		},
+		{
+			"key": "pName",
+			"value": ""
+		},
+		{
+			"key": "pIsDisplayable",
+			"value": ""
+		},
+		{
+			"key": "pIsRequired",
+			"value": ""
+		},
+		{
+			"key": "pId",
+			"value": ""
+		},
+		{
+			"key": "dId",
+			"value": ""
+		}
+	]
+}
